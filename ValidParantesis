@@ -1,0 +1,46 @@
+const {Stack} = require('./DataStructurs/Stack/StackClass')
+class Evaluate extends Stack {
+     isValidParentheses(s) {
+        const stack = new Stack();
+        const openMap = {
+            '(': ')',
+            '[': ']',
+            '{': '}'
+        };
+    
+        for (let i = 0; i < s.length; i++) {
+            const char = s[i];
+            if (char in openMap) {
+                stack.push(char); // Push opening parentheses onto the stack
+            } else {
+                // If it's a closing parenthesis
+                if (stack.isEmpty()) {
+                    // If there are no opening parentheses left in the stack
+                    return false;
+                }
+                const lastOpenParen = stack.pop();
+                if (openMap[lastOpenParen] !== char) {
+                    // If the current closing parenthesis doesn't match the last opening parenthesis
+                    return false;
+                }
+            }
+        }
+    
+        // If there are still remaining opening parentheses left in the stack
+        return stack.isEmpty();
+    }
+    
+   
+    // Example usage:
+    //console.log(isValidParentheses("()")); // true
+    // console.log(isValidParentheses("()[]{}")); // true
+    // console.log(isValidParentheses("(]")); // false
+    // console.log(isValidParentheses("([)]")); // false
+    // console.log(isValidParentheses("{[]}")); // true
+    
+}
+
+
+const validPar = new Evaluate();
+console.log(validPar.isValidParentheses("()")); // true
+
